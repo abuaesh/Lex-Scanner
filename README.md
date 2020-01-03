@@ -18,6 +18,23 @@ By that, the file _output.exe_ is created in the root directory.
 4. After that, run the generated executable by typing in the command below and specifying the input file to be tokenized:
 `.\output.exe in.txt` we can get the final results as a series of tokens and a list of syntax errors. <- There is a bug in here: FIX IT IF YOU CAN
 
+### Specifications for the Supported Language
+
+#### Lex Conventions
+The supported language is depicted from Appendix A from the Kenneth Louden's book: Compiler Construction: Principles and Practice, Course Technology, with replacing the definition of ID and NUM as follows:
+      ID = letter (letter | digit )* (“.”|@ | “_” | ) (letter | digit )+
+      NUM = digit + | digit+ “.” digit +(((E |e) (+|- | ) digit +)|
+Also, the characters in the keywords and identifiers can appear as capital or small letters
+(i.e. no distinction between capital and small. A is like a and if is like IF and If).
+
+#### Error Handling
+The following errors are handled:
+1. Reaching the end of file while a comment is not closed.
+2. Finding a character which is not in the alphabet of the language.
+3. Exiting from the scanning of a token while not reaching the final state. For example, while recognizing an identifier, you find “*” after “-“ ( aaa_*) , or while recognizing a number you find a letter after “e” (2.3eX).
+4. Do not handle the problem of having a number followed by an identifier without leavening spaces and similar problems. This will be handled by the parser. For example your scanner will produce as an output num id for the string “12ab” because this string, “12 ab”, is still erroneous even if you leave spaces.
+Error messages indicate the line number and character position where the error occurs.
+
 ## Known Issues
 
 The expected results as mentioned before are the tokens and lexemes that should appear in the input file _in.txt_, 
